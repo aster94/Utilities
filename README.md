@@ -1,6 +1,6 @@
 # Utilities
 
-This is a collection of useful functions for the Arduino Framerwork. All the functions are quite simple, you can see them in the [header](Utilities.h)
+This is a collection of useful functions for the Arduino Framerwork. All the functions are quite simple, you can see them in the [header](Utilities.h).
 
 Upload the [example](/examples/basic/basic.ino) to see how to use them 🔥
 
