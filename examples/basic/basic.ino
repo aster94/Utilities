@@ -5,8 +5,8 @@ void setup()
   Serial.begin(115200);
   delay(1000);
 
-  // Create a group of pin
-  uint8_t group[] = {LED_BUILTIN, 12, 11, 10, 9, 8};
+  // Create a group of pins
+  byte group[] = {LED_BUILTIN, 12, 11, 10, 9, 8};
 
   // Print that group
   printArray(group, LEN(group));
@@ -20,14 +20,14 @@ void setup()
   digitalWriteGroup(group, LEN(group), LOW);
 
   // Toggle the state of a pin
-  for (uint8_t n = 0; n < 5; n++)
+  for (byte n = 0; n < 5; n++)
   {
     digitalToggle(LED_BUILTIN);
     delay(500);
   }
 
   // Or toggle a group of pins
-  for (uint8_t n = 0; n < 5; n++)
+  for (byte n = 0; n < 5; n++)
   {
     digitalToggleGroup(group, LEN(group));
     delay(500);
@@ -44,9 +44,12 @@ void setup()
   Serial.println(substring); // this will output "test"
 
   // A more complex array for printArray
-  uint8_t array[] = {1, 0x56, 0b1011};
+  int array[] = {1, 11, 89, 34, 9};
 
-  // Print the array as hexadecimal values with a ":" between the items and invert it (from the last to the first)
+  // Print the array as decimal values with a ", " between the items and invert them (from the last to the first)
+  printArray(array, LEN(array), ", ", DEC, true);
+
+  // Print the array as hexadecimal values with a ":" between the items and invert them (from the last to the first)
   printArray(array, LEN(array), ":", HEX, true);
 
   // Print the array as binary values with a newline ("\n") between the items and write the index before every element
@@ -56,4 +59,19 @@ void setup()
   //echo(&Serial, &Serial2);
 }
 
-void loop() {}
+unsigned long task1, task2;
+
+void loop()
+{
+  // This will be run every 3500 milliseconds (3.5 seconds)
+  if (doEvery(&task1, 3500))
+  {
+    Serial.println("Hello, from task1");
+  }
+
+  // This every 10 seconds
+  if (doEvery(&task2, 10000))
+  {
+    Serial.println("Also from task2!");
+  }
+}
