@@ -1,11 +1,11 @@
 # Utilities
 
 This is a collection of useful functions for the Arduino Framerwork, like:
-- printArray
-- pinModeGroup
-- digitalWriteGroup
-- digitalToggle
-- digitalToggleGroup
-- split
+- printArray()
+- pinModeGroup()
+- digitalWriteGroup()
+- digitalToggle()
+- digitalToggleGroup()
+- splitString()
 
-Upload the example to see them working
+Upload the [example](/examples/basic/basic.ino) to see them in action 🔥
