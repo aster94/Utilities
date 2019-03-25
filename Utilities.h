@@ -10,10 +10,25 @@
 #endif
 
 // MACROS
+#define LEN(x) ((sizeof(x) / sizeof(0 [x])) / ((size_t)(!(sizeof(x) % sizeof(0 [x]))))) // complex but safe macro for the lenght
 #define TO_FAHRENHEIT(x) x * 1.8 + 32
 #define TO_CELSIUS(x) (x - 32) * 0.55
-#define LEN(x) ((sizeof(x) / sizeof(0 [x])) / ((size_t)(!(sizeof(x) % sizeof(0 [x]))))) // complex but safe macro for the lenght
-#define maybe 2																			// true or false is not enough
+#define maybe 2 // true or false is not enough
+
+// Run a task using without blocking code every given time
+template <class T1, class T2>
+bool doEvery(T1 *start_time, T2 interval)
+{
+	if (millis() > *start_time + interval)
+	{
+		*start_time = millis();
+		return true;
+	}
+	else
+	{
+		return false;
+	}
+}
 
 // Change the state of a group of pins
 void pinModeGroup(uint8_t pins[], size_t len, uint8_t state)
