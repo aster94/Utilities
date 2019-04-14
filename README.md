@@ -1,6 +1,6 @@
 # Utilities
 
-This is a collection of useful functions for the Arduino Framerwork. All the functions are quite simple, you can see them in the [header](Utilities.h).
+This is a collection of useful functions for the Arduino Framework. All the functions are quite simple, you can see them in the [header](Utilities.h).
 
 Upload the [example](/examples/basic/basic.ino) to see how to use them 🔥
 
@@ -40,3 +40,13 @@ Convert Celsius to Fahrenheit
 
 #### TO_CELSIUS
 Convert Fahrenheit to Celsius
+
+# Extras
+
+in the [extras](/extras) folder there are two useful python scripts:
+
+### keywords
+Automatically generate the keywords.txt from a header file or make an existing keywords.txt with a uniform indentation
+
+### wrap
+Wrap a word around any symbol for documentation of source code
