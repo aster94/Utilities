@@ -158,7 +158,7 @@ def read_keywords(file_path, verbose, force):
 
 def write_keywords(key_dict, file_path, verbose, soft):
     max_len = 0
-
+    '''
     # Get the longest item
     for k in key_dict.keys():
         for i in key_dict[k]:
@@ -168,21 +168,21 @@ def write_keywords(key_dict, file_path, verbose, soft):
     # Extend it
     while (max_len % 4 != 0): max_len += 1
     max_len += distance
-
+    '''
     output = template_KEYWORD1
     for n in key_dict['KEYWORD1']:
         pos = max_len - len(n)
-        output += '{}{}{}\n'.format(n, ' ' * pos, 'KEYWORD1')
+        output += '{}\t{}\n'.format(n, 'KEYWORD1')
 
     output += '\n\n' + template_KEYWORD2
     for n in key_dict['KEYWORD2']:
         pos = max_len - len(n)
-        output += '{}{}{}\n'.format(n, ' ' * pos, 'KEYWORD2')
+        output += '{}\t{}\n'.format(n, 'KEYWORD2')
 
     output += '\n\n' + template_LITERAL1
     for n in key_dict['LITERAL1']:
         pos = max_len - len(n)
-        output += '{}{}{}\n'.format(n, ' ' * pos, 'LITERAL1')
+        output += '{}\t{}\n'.format(n, 'LITERAL1')
 
     if verbose: print('{} printed/wrote'.format(file_path))
     if soft: print(output.strip())
