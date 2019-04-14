@@ -6,22 +6,24 @@
 # Datatypes (KEYWORD1)
 #######################################
 
+
 #######################################
 # Methods and Functions (KEYWORD2)
 #######################################
-doEvery     		KEYWORD2
-pinModeGroup		KEYWORD2
+doEvery	KEYWORD2
+pinModeGroup	KEYWORD2
 digitalWriteGroup	KEYWORD2
-digitalToggle		KEYWORD2
+digitalToggle	KEYWORD2
 digitalToggleGroup	KEYWORD2
-echo	 			KEYWORD2
-printArray 			KEYWORD2
-splitString			KEYWORD2
+echo	KEYWORD2
+printArray	KEYWORD2
+splitString	KEYWORD2
 
-#######################################
+
+######################################
 # Constants (LITERAL1)
-#######################################
-LEN					LITERAL1
-TO_FAHRENHEIT		LITERAL1
-TO_CELSIUS  		LITERAL1
-maybe				LITERAL1
+######################################
+LEN	LITERAL1
+TO_FAHRENHEIT	LITERAL1
+TO_CELSIUS	LITERAL1
+maybe	LITERAL1
