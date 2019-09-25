@@ -27,8 +27,17 @@ Echo between two serial ports, bi or mono directional
 #### printArray()
 Print an array of any kind
 
-#### splitString()
-Split a cstring into token and get one of them
+#### stringSplit()
+Split a char array in sub strings
+
+#### stringEndWith()
+Split a char array in sub strings
+
+#### stringStartWith()
+Check if a string start with a given string
+
+#### stringCut()
+Cut a given string from start to end
 
 # Macros
 
