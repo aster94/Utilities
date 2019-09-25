@@ -3,12 +3,12 @@
 void setup()
 {
   Serial.begin(115200);
-  delay(1000);
+  delay(100);
 
   // Create a group of pins
   byte group[] = {LED_BUILTIN, 12, 11, 10, 9, 8};
 
-  // Print that group
+  // Print this group
   printArray(group, LEN(group));
 
   // Set their pinMode
@@ -33,17 +33,7 @@ void setup()
     delay(500);
   }
 
-  // Create a string
-  char str[] = "hello, this is a test";
-
-  // Split it and get the 4th part (starting from 0)
-  char *substring = splitString(str, 4, " ,");
-
-  // Print it
-  Serial.print("substring: ");
-  Serial.println(substring); // this will output "test"
-
-  // A more complex array for printArray
+  // Another array for printArray
   int array[] = {1, 11, 89, 34, 9};
 
   // Print the array as decimal values with a ", " between the items and invert them (from the last to the first)
@@ -57,6 +47,50 @@ void setup()
 
   // If you have more then one serial (like Serial2 or SoftwareSerial) you can make an echo between them
   //echo(&Serial, &Serial2);
+
+  // Now some examples of string manipulation
+
+  // The string we want to cute
+  const char *long_text = "This is a very\n\
+long text that you want\n\
+to divide in lines";
+
+  // Some values that we need to initialize
+  char **lines = nullptr;
+  size_t number_of_lines;
+
+  // Finally we can split the string
+  lines = stringSplit(&lines, &number_of_lines, long_text, "\n");
+
+  // Print it line by line
+  for (uint8_t n = 0; n < number_of_lines; n++)
+  {
+    Serial.println(lines[n]);
+  }
+
+  // Assign part of it to a new variable
+  char *second_line = lines[1];
+
+  // This way we delete the variable lines and the memory it was occupy
+  free(lines);
+
+  // Check if a string start with another
+  if (stringStartWith(second_line, "long"))
+  {
+    Serial.println("Yes it is!");
+  }
+
+  // Cut/substring a piece of text
+  second_line = stringCut(second_line, 0, -5);
+
+  Serial.print("2° line after cut: ");
+  Serial.println(second_line);
+
+  // Check if a string ends with another
+  if (!stringEndWith(second_line, "want"))
+  {
+    Serial.println("Too late, \"want\" was cutted!");
+  }
 }
 
 unsigned long task1, task2;

@@ -17,7 +17,10 @@ digitalToggle	KEYWORD2
 digitalToggleGroup	KEYWORD2
 echo	KEYWORD2
 printArray	KEYWORD2
-splitString	KEYWORD2
+stringSplit	KEYWORD2
+stringEndWith	KEYWORD2
+stringStartWith	KEYWORD2
+stringCut KEYWORD2
 
 
 ######################################
