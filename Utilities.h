@@ -141,19 +141,19 @@ char **stringSplit(char ***dest_arr, size_t *len_dest_arr, const char *str, cons
     char str_copy[str_len];        // we work on a copy
     strcpy(str_copy, str);
 
-    (*dest_arr) = (char **)malloc(sizeof(char *) * str_len); // over size
+    *dest_arr = (char **)malloc(sizeof(char) * str_len); // over size
 
     uint8_t counter = 0;                        // limited to 255 sub strings
     char *token = strtok(str_copy, delimiters); // split until first token
     while (token != nullptr)
     {
-        (*dest_arr)[counter] = (char *)malloc(strlen(token) + 1); // add null terminator
+        (*dest_arr)[counter] = (char *)malloc(sizeof(char) * strlen(token) + 1); // add null terminator
         strcpy((*dest_arr)[counter], token);                      // copy token to dest_array
         token = strtok(NULL, delimiters);                         // continue splitting
         counter++;
     }
 
-    (*dest_arr) = (char **)realloc((*dest_arr), sizeof(char *) * counter); // reallocate the right amount of memory
+    *dest_arr = (char **)realloc((*dest_arr), sizeof(char) * counter); // reallocate the right amount of memory
     *len_dest_arr = counter;                                               // save size
     return (*dest_arr);
 }
