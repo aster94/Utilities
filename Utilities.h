@@ -201,7 +201,7 @@ char *stringCut(const char *str, int8_t start, int8_t end) {
   if (start > end || start == end) // return an empty char
   {
     // print << "what?\n";
-    return '\0';
+    return (char *)'\0';
   }
   if (end > len) // cut until the end
   {
@@ -210,14 +210,14 @@ char *stringCut(const char *str, int8_t start, int8_t end) {
   }
 
   char *cutted = (char *)malloc(
-      sizeof(char *) * (end - start)); // allocate the right amount of memory
+      sizeof(char) * (end - start)); // allocate the right amount of memory
   strncpy(cutted, str + start, end - offset); // make the cut
   cutted[end - start] = '\0';                 // add null-terminator
 
   return cutted;
 }
 
-#if defined(_GLIBCXX_VECTOR) && defined (_GLIBCXX_STRING)
+#if defined(_GLIBCXX_VECTOR) && defined(_GLIBCXX_STRING)
 
 using std::string;
 using std::vector;
