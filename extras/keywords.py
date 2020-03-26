@@ -1,6 +1,6 @@
 #! python3
 """
-Automatically generate the keywords.txt from a header file or make an existing 
+Automatically generate the keywords.txt from a header file or make an existing
 keywords.txt with a uniform indentation
 
 @author: aster94
@@ -47,7 +47,7 @@ def file_read(file_path):
 def file_write(file_path, content):
     with open(file_path, 'w') as file:
         file.write(content)
-        
+
 def file_copy(source, destination):
     shutil.copy(source, destination)
 
@@ -59,13 +59,13 @@ def file_create(file_path):
 ######                   Functions                   #######
 ############################################################
 def read_header(file_path, verbose, force):
-    
+
     block_comment = False
     polished = ""
     key = {'KEYWORD1': list(), 'KEYWORD2': list(), 'LITERAL1': list()}
 
     raw = file_read (file_path)
-        
+
     # Integrity checks
     multiline_comment_start = raw.count('/*')
     multiline_comment_end = raw.count('*/')
@@ -85,15 +85,15 @@ def read_header(file_path, verbose, force):
             else:
                 block_comment = False
                 line = line[line.find('*/')+2:]
-            
+
         if (line.find('/*') != -1):
             # It is the start of a block comment
             block_comment = True
             line = line[:line.find('/*')]
-            
+
         if (line.find('//') != -1):
             line = line[:line.find('//')]
-            
+
         if (line.find('#') != -1):
             continue
 
@@ -171,22 +171,22 @@ def write_keywords(key_dict, file_path, verbose, soft):
     '''
     output = template_KEYWORD1
     for n in key_dict['KEYWORD1']:
-        pos = max_len - len(n)
+        #pos = max_len - len(n)
         output += '{}\t{}\n'.format(n, 'KEYWORD1')
 
     output += '\n\n' + template_KEYWORD2
     for n in key_dict['KEYWORD2']:
-        pos = max_len - len(n)
+        #pos = max_len - len(n)
         output += '{}\t{}\n'.format(n, 'KEYWORD2')
 
     output += '\n\n' + template_LITERAL1
     for n in key_dict['LITERAL1']:
-        pos = max_len - len(n)
+        #pos = max_len - len(n)
         output += '{}\t{}\n'.format(n, 'LITERAL1')
 
     if verbose: print('{} printed/wrote'.format(file_path))
     if soft: print(output.strip())
-    else: file_write(file_path, output.strip())     
+    else: file_write(file_path, output.strip())
 
 
 @click.command()
@@ -198,7 +198,7 @@ def write_keywords(key_dict, file_path, verbose, soft):
 @click.option('--preserve' , '-p', is_flag=True, default=True, help='Don\'t preserve LITERAL1 even if keywords.txt already exists.')
 def keywords(file_path, backup, verbose, force, soft, preserve):
     """
-    Automatically generate the keywords.txt from a header file or make an existing 
+    Automatically generate the keywords.txt from a header file or make an existing
     keywords.txt with a uniform indentation
     """
 
@@ -251,9 +251,11 @@ def keywords(file_path, backup, verbose, force, soft, preserve):
     else:
         if verbose: print('{} created'.format(keywords_path))
         file_create(keywords_path)
-    
+
     write_keywords(key_dict, keywords_path, verbose, soft)
 
+def main():
+    keywords()
 
 if __name__ == '__main__':
-    keywords()
+    main()

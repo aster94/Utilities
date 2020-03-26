@@ -91,6 +91,9 @@ to divide in lines";
   {
     Serial.println("Too late, \"want\" was cutted!");
   }
+
+  Serial.print("Sub string start at: ");
+  Serial.println(stringSearch(long_text, "want"));
 }
 
 unsigned long task1, task2;

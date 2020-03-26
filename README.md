@@ -36,6 +36,9 @@ Split a char array in sub strings
 #### stringStartWith()
 Check if a string start with a given string
 
+#### stringStartWith()
+Search a sub string in a string
+
 #### stringCut()
 Cut a given string from start to end
 

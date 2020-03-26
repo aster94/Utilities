@@ -10,34 +10,40 @@
 #endif
 
 // MACROS
-#define LEN(x)                                                                 \
-  ((sizeof(x) / sizeof(0 [x])) /                                               \
-   ((size_t)(!(sizeof(x) %                                                     \
-               sizeof(0 [x]))))) // complex but safe macro for the lenght
+#define LEN(x) ((sizeof(x) / sizeof(0 [x])) / ((size_t)(!(sizeof(x) % sizeof(0 [x]))))) // complex but safe macro for the lenght
 #define TO_FAHRENHEIT(x) x * 1.8 + 32
 #define TO_CELSIUS(x) (x - 32) * 0.55
 #define maybe 2 // true or false is not enough
 
 // Run a task every given time without blocking the rest of the code
-template <class T1, class T2> bool doEvery(T1 *start_time, T2 interval) {
-  if (millis() > *start_time + interval) {
+template <class T1, class T2>
+bool doEvery(T1 *start_time, T2 interval)
+{
+  if (millis() > *start_time + interval)
+  {
     *start_time = millis();
     return true;
-  } else {
+  }
+  else
+  {
     return false;
   }
 }
 
 // Change the state of a group of pins
-void pinModeGroup(uint8_t pins[], size_t len, uint8_t state) {
-  for (uint8_t i = 0; i < len; i++) {
+void pinModeGroup(uint8_t pins[], size_t len, uint8_t state)
+{
+  for (uint8_t i = 0; i < len; i++)
+  {
     pinMode(pins[i], state);
   }
 }
 
 // Write the state of a group of pins
-void digitalWriteGroup(uint8_t pins[], size_t len, uint8_t state) {
-  for (uint8_t i = 0; i < len; i++) {
+void digitalWriteGroup(uint8_t pins[], size_t len, uint8_t state)
+{
+  for (uint8_t i = 0; i < len; i++)
+  {
     digitalWrite(pins[i], state);
   }
 }
@@ -46,20 +52,26 @@ void digitalWriteGroup(uint8_t pins[], size_t len, uint8_t state) {
 void digitalToggle(uint8_t pin) { digitalWrite(pin, !digitalRead(pin)); }
 
 // Toggle the state of a group of pins
-void digitalToggleGroup(uint8_t pins[], size_t len) {
-  for (uint8_t i = 0; i < len; i++) {
+void digitalToggleGroup(uint8_t pins[], size_t len)
+{
+  for (uint8_t i = 0; i < len; i++)
+  {
     digitalWrite(pins[i], !digitalRead(pins[i]));
   }
 }
 
 // Echo between two serial ports, bi or mono directional
 void echo(UniversalSerial *one, UniversalSerial *two,
-          bool mono_directional = false) {
-  if (one->available()) {
+          bool mono_directional = false)
+{
+  if (one->available())
+  {
     two->write(one->read());
   }
-  if (mono_directional == false) {
-    if (two->available()) {
+  if (mono_directional == false)
+  {
+    if (two->available())
+    {
       one->write(two->read());
     }
   }
@@ -69,30 +81,41 @@ void echo(UniversalSerial *one, UniversalSerial *two,
 template <class T>
 void printArray(T array, size_t len, char delimiter[] = "\n",
                 uint8_t formatter = DEC, bool invert = false,
-                bool index = false, UniversalSerial *_port = &Serial) {
-  if (len >= 65535) {
+                bool index = false, UniversalSerial *_port = &Serial)
+{
+  if (len >= 65535)
+  {
     _port->println("ARRAY TOO BIG");
   }
 
-  if (invert == false) {
-    for (uint16_t i = 0; i < len; i++) {
-      if (index) {
+  if (invert == false)
+  {
+    for (uint16_t i = 0; i < len; i++)
+    {
+      if (index)
+      {
         _port->print(i);
         _port->print(": ");
       }
       _port->print(array[i], formatter);
-      if (i < len - 1) {
+      if (i < len - 1)
+      {
         _port->print(delimiter);
       }
     }
-  } else {
-    for (uint16_t i = len; i > 0; i--) {
-      if (index) {
+  }
+  else
+  {
+    for (uint16_t i = len; i > 0; i--)
+    {
+      if (index)
+      {
         _port->print(i - 1);
         _port->print(": ");
       }
       _port->print(array[i - 1], formatter);
-      if (i > 1) {
+      if (i > 1)
+      {
         _port->print(delimiter);
       }
     }
@@ -113,7 +136,8 @@ void printArray(T array, size_t len, char delimiter[] = "\n",
  * @return char** same as dest_arr
  */
 char **stringSplit(char ***dest_arr, size_t *len_dest_arr, const char *str,
-                   const char *delimiters) {
+                   const char *delimiters)
+{
   int str_len = strlen(str) + 1; // add null terminator
   char str_copy[str_len];        // we work on a copy
   strcpy(str_copy, str);
@@ -122,11 +146,12 @@ char **stringSplit(char ***dest_arr, size_t *len_dest_arr, const char *str,
 
   uint8_t counter = 0;                        // limited to 255 sub strings
   char *token = strtok(str_copy, delimiters); // split until first token
-  while (token != nullptr) {
+  while (token != nullptr)
+  {
     (*dest_arr)[counter] =
         (char *)malloc(sizeof(char) * strlen(token) + 1); // add null terminator
-    strcpy((*dest_arr)[counter], token); // copy token to dest_array
-    token = strtok(NULL, delimiters);    // continue splitting
+    strcpy((*dest_arr)[counter], token);                  // copy token to dest_array
+    token = strtok(NULL, delimiters);                     // continue splitting
     counter++;
   }
 
@@ -145,10 +170,12 @@ char **stringSplit(char ***dest_arr, size_t *len_dest_arr, const char *str,
  * @return true if char* ends with the given char
  * @return false if char* don't ends with the given char
  */
-bool stringEndWith(const char *str, const char *suffix) {
+bool stringEndWith(const char *str, const char *suffix)
+{
   size_t strLen = strlen(str);
   size_t suffixLen = strlen(suffix);
-  if (suffixLen <= strLen) {
+  if (suffixLen <= strLen)
+  {
     return strncmp(str + strLen - suffixLen, suffix, suffixLen) == 0;
   }
   return 0;
@@ -160,15 +187,34 @@ bool stringEndWith(const char *str, const char *suffix) {
  * @param The char* to to check
  * @param The characters looked for
  * @return true if char* starts with the given char
- * @return false if char* don't starts with the given char
+ * @return false if char* doesn't starts with the given char
  */
-bool stringStartWith(const char *str, const char *prefix) {
+bool stringStartWith(const char *str, const char *prefix)
+{
   size_t strLen = strlen(str);
   size_t prefixLen = strlen(prefix);
-  if (prefixLen <= strLen) {
+  if (prefixLen <= strLen)
+  {
     return strncmp(str, prefix, prefixLen) == 0;
   }
   return 0;
+}
+
+/**
+ * @brief Search a sub string in a string
+ *
+ * @param The string in which we are searching
+ * @param The sub string to find
+ * @return The index of the sub string
+ */
+int16_t stringSearch(char *string, char *sub_string)
+{
+  char *start = strstr(string, sub_string);
+  if (start != nullptr)
+  {
+    return start - string;
+  }
+  return -1;
 }
 
 /**
@@ -179,7 +225,8 @@ bool stringStartWith(const char *str, const char *prefix) {
  * @param The ending point, accept also negative value
  * @return The resulting char array
  */
-char *stringCut(const char *str, int8_t start, int8_t end) {
+char *stringCut(const char *str, int8_t start, int8_t end)
+{
   // print << "Cutting: \"" << str << "\" from: " << (int) start << " to " <<
   // (int)end << "\n";
   uint8_t len = strlen(str);
@@ -210,7 +257,7 @@ char *stringCut(const char *str, int8_t start, int8_t end) {
   }
 
   char *cutted = (char *)malloc(
-      sizeof(char) * (end - start)); // allocate the right amount of memory
+      sizeof(char) * (end - start));          // allocate the right amount of memory
   strncpy(cutted, str + start, end - offset); // make the cut
   cutted[end - start] = '\0';                 // add null-terminator
 
@@ -229,16 +276,20 @@ using std::vector;
  * @param A std::string of one or more delimeters
  * @return A std::vector
  */
-vector<string> stringSplit(const string &src, const string &delimiters) {
+vector<string> stringSplit(const string &src, const string &delimiters)
+{
   vector<string> result;
   size_t start = 0;
   for (size_t end = src.find_first_of(delimiters, start); end != string::npos;
-       start = end + 1, end = src.find_first_of(delimiters, start)) {
-    if (end != start) {
+       start = end + 1, end = src.find_first_of(delimiters, start))
+  {
+    if (end != start)
+    {
       result.push_back(src.substr(start, end - start));
     }
   }
-  if (start < src.size()) {
+  if (start < src.size())
+  {
     result.push_back(src.substr(start));
   }
   return result;

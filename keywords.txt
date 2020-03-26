@@ -20,7 +20,8 @@ printArray	KEYWORD2
 stringSplit	KEYWORD2
 stringEndWith	KEYWORD2
 stringStartWith	KEYWORD2
-stringCut KEYWORD2
+stringSearch	KEYWORD2
+stringCut	KEYWORD2
 
 
 ######################################
