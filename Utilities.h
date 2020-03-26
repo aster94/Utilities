@@ -205,14 +205,23 @@ bool stringStartWith(const char *str, const char *prefix)
  *
  * @param The string in which we are searching
  * @param The sub string to find
+ * @param The starting position from where to search
  * @return The index of the sub string
  */
-int16_t stringSearch(char *string, char *sub_string)
+int16_t stringSearch(char *string, char *sub_string, int16_t start = 0)
 {
-  char *start = strstr(string, sub_string);
-  if (start != nullptr)
+  char *index = strstr(string, sub_string);
+  if (index != nullptr)
   {
-    return start - string;
+    while ((index - string) < start)
+    {
+      index = strstr(string + start, sub_string);
+      if (index == nullptr)
+      {
+        return -1;
+      }
+    }
+    return index - string;
   }
   return -1;
 }
