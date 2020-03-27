@@ -1,8 +1,8 @@
 # Utilities
 
-This is a collection of useful functions for the Arduino Framework. All the functions are quite simple, you can see them in the [header](Utilities.h).
+This is a collection of useful functions for the Arduino Framework. All the functions are quite simple, you can see them in the [header](src/Utilities.h).
 
-Upload the [example](/examples/basic/basic.ino) to see how to use them 🔥
+Upload the [example](examples/basic/basic.ino) to see how to use them 🔥
 
 # Functions
 
@@ -27,16 +27,19 @@ Echo between two serial ports, bi or mono directional
 #### printArray()
 Print an array of any kind
 
-#### stringSplit()
-Split a char array in sub strings
+#### stringReverse()
+Revert a string
 
-#### stringEndWith()
+#### stringSplit()
 Split a char array in sub strings
 
 #### stringStartWith()
 Check if a string start with a given string
 
-#### stringStartWith()
+#### stringEndWith()
+Split a char array in sub strings
+
+#### stringSearch()
 Search a sub string in a string
 
 #### stringCut()

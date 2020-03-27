@@ -1,4 +1,5 @@
-#include <Utilities.h>
+#include <Arduino.h>
+#include "Utilities.h"
 
 void setup()
 {
@@ -94,6 +95,8 @@ to divide in lines";
 
   Serial.print("Sub string start at: ");
   Serial.println(stringSearch(long_text, "want"));
+
+  Serial.println(stringReverse("em trever"));
 }
 
 unsigned long task1, task2;

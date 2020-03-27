@@ -31,7 +31,9 @@ bool doEvery(T1 *start_time, T2 interval)
 }
 
 // Change the state of a group of pins
-void pinModeGroup(uint8_t pins[], size_t len, uint8_t state)
+// The template is needed for compatibility with STM32 core
+template <class T>
+void pinModeGroup(uint8_t pins[], size_t len, T state)
 {
   for (uint8_t i = 0; i < len; i++)
   {
@@ -79,7 +81,7 @@ void echo(UniversalSerial *one, UniversalSerial *two,
 
 // Print an array of any kind
 template <class T>
-void printArray(T array, size_t len, char delimiter[] = "\n",
+void printArray(T array, size_t len, const char *delimiter = "\n",
                 uint8_t formatter = DEC, bool invert = false,
                 bool index = false, UniversalSerial *_port = &Serial)
 {
@@ -125,6 +127,28 @@ void printArray(T array, size_t len, char delimiter[] = "\n",
 
 // The following functions are useful to work with char array
 // without loosing hours debugging memory leak
+/**
+ * @brief Revert a char array
+ *
+ * @param source The char to revert
+ * @return char* the reverted char array
+ */
+char *stringReverse(const char *source)
+{
+  uint8_t str_len = strlen(source);
+  char *str = new char[str_len];
+  strcpy(str, source);
+
+  char temp;
+  for (uint8_t i = 0; i < str_len / 2; i++)
+  {
+    temp = str[i];
+    str[i] = str[str_len - i - 1];
+    str[str_len - i - 1] = temp;
+  }
+
+  return str;
+}
 
 /**
  * @brief Split a char array in sub strings
@@ -163,6 +187,24 @@ char **stringSplit(char ***dest_arr, size_t *len_dest_arr, const char *str,
 }
 
 /**
+ * @brief Check if a string start with a given string
+ *
+ * @param The char* to to check
+ * @param The characters looked for
+ * @return true if char* starts with the given char
+ * @return false if char* doesn't starts with the given char
+ */
+bool stringStartWith(const char *str, const char *prefix)
+{
+  size_t strLen = strlen(str);
+  size_t prefixLen = strlen(prefix);
+  if (prefixLen <= strLen)
+  {
+    return strncmp(str, prefix, prefixLen) == 0;
+  }
+  return 0;
+}
+/**
  * @brief Check if a string ends with a given string
  *
  * @param The char* to to check
@@ -182,25 +224,6 @@ bool stringEndWith(const char *str, const char *suffix)
 }
 
 /**
- * @brief Check if a string start with a given string
- *
- * @param The char* to to check
- * @param The characters looked for
- * @return true if char* starts with the given char
- * @return false if char* doesn't starts with the given char
- */
-bool stringStartWith(const char *str, const char *prefix)
-{
-  size_t strLen = strlen(str);
-  size_t prefixLen = strlen(prefix);
-  if (prefixLen <= strLen)
-  {
-    return strncmp(str, prefix, prefixLen) == 0;
-  }
-  return 0;
-}
-
-/**
  * @brief Search a sub string in a string
  *
  * @param The string in which we are searching
@@ -208,14 +231,26 @@ bool stringStartWith(const char *str, const char *prefix)
  * @param The starting position from where to search
  * @return The index of the sub string
  */
-int16_t stringSearch(char *string, char *sub_string, int16_t start = 0)
+int16_t stringSearch(const char *string, const char *sub_string, int16_t start = 0)
 {
-  char *index = strstr(string, sub_string);
+  char *index;
+  if (start == -1)
+  {
+
+    index = strstr(stringReverse(string), sub_string);
+    if (index == nullptr)
+    {
+      return -1;
+    }
+
+    return strlen(index) - 1;
+  }
+  index = strstr((char *)string, sub_string);
   if (index != nullptr)
   {
     while ((index - string) < start)
     {
-      index = strstr(string + start, sub_string);
+      index = strstr((char *)string + start, sub_string);
       if (index == nullptr)
       {
         return -1;
@@ -234,12 +269,12 @@ int16_t stringSearch(char *string, char *sub_string, int16_t start = 0)
  * @param The ending point, accept also negative value
  * @return The resulting char array
  */
-char *stringCut(const char *str, int8_t start, int8_t end)
+char *stringCut(const char *str, int16_t start, int16_t end)
 {
   // print << "Cutting: \"" << str << "\" from: " << (int) start << " to " <<
   // (int)end << "\n";
-  uint8_t len = strlen(str);
-  int8_t offset = start;
+  uint16_t len = strlen(str);
+  int16_t offset = start;
 
   // print << "str len: " << (int)len << "\n";
 
@@ -259,7 +294,7 @@ char *stringCut(const char *str, int8_t start, int8_t end)
     // print << "what?\n";
     return (char *)'\0';
   }
-  if (end > len) // cut until the end
+  if (end > (int16_t)len) // cut until the end
   {
     // print << "out\n";
     end = len;

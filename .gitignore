@@ -1,3 +1,6 @@
-.pioenvs
-.vscode
-platformio.ini
+.pio/**
+.vscode/**
+test/**
+lib/**
+include/**
+.travis.yml
